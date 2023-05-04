@@ -17,15 +17,23 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     var duration = const Duration(seconds: 3);
     final Apppreferences _prefs = Apppreferences();
     final isLogged = await _prefs.getLoginState();
+    final isOnboarding = await _prefs.getOnboarding();
 
-    if (isLogged) {
-      print(isLogged);
-      return Timer(duration, () {
-        Navigator.pushReplacementNamed(context, Approute.ONBOARDING);
-      });
+    if (isOnboarding) {
+      print("isOnboarding $isOnboarding , isLogged $isLogged");
+      if (isLogged) {
+        print(isLogged);
+        return Timer(duration, () {
+          Navigator.pushReplacementNamed(context, Approute.HOME);
+        });
+      } else {
+        return Timer(duration, () {
+          Navigator.pushReplacementNamed(context, Approute.WRAPPER);
+        });
+      }
     } else {
       return Timer(duration, () {
-        Navigator.pushReplacementNamed(context, Approute.WRAPPER);
+        Navigator.pushReplacementNamed(context, Approute.ONBOARDING);
       });
     }
   }

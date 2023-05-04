@@ -1,5 +1,7 @@
 part of '../../pages.dart';
 
+final Apppreferences _apppreferences = Apppreferences();
+
 class Onboarding extends StatefulWidget {
   const Onboarding({Key? key}) : super(key: key);
 
@@ -21,7 +23,7 @@ class _OnboardingState extends State<Onboarding> {
             SizedBox(height: MediaQuery.of(context).size.width * 0.3),
             _body(context),
             SizedBox(height: MediaQuery.of(context).size.width * 0.3),
-            _footer(context),
+            _footer(context, _apppreferences),
           ],
         ),
       )),
@@ -45,7 +47,7 @@ Widget _body(context) {
       Container(
         width: 200,
         height: 200,
-        child: Lottie.asset("assets/lottie/onboarding.json"),
+        child: Image.asset("assets/image/splash.png"),
       ),
       SizedBox(height: 20),
       Container(
@@ -59,7 +61,7 @@ Widget _body(context) {
   );
 }
 
-Widget _footer(context) {
+Widget _footer(context, setData) {
   return Column(
     children: [
       Container(
@@ -72,7 +74,13 @@ Widget _footer(context) {
               borderRadius: BorderRadius.circular(18),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            showModalLogin(context);
+            // _showmodalLogin(context);
+            // _apppreferences.setOnboarding(true);
+            // print("oke diubah");
+            // Navigator.pushReplacementNamed(context, Approute.WRAPPER);
+          },
           child: Text("Get Started"),
         ),
       ),
@@ -85,5 +93,72 @@ Widget _footer(context) {
         ),
       ),
     ],
+  );
+}
+
+Future<void> showModalLogin(context) {
+  return showModalBottomSheet<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 200,
+        color: Colors.black45,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'Please sign in using a Google Account',
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width - 30 * 3,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.ac_unit,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Text(
+                        'Continue with Google',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Skip',
+                style: TextStyle(
+                    color: Color(0xffF2F2F2),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
   );
 }

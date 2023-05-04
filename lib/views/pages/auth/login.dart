@@ -16,7 +16,7 @@ class _LoginState extends State<Login> {
         child: TextButton(
             onPressed: () {
               setState(() {
-                _prefs.setLoginState(true);
+                _prefs.setOnboarding(false);
               });
             },
             child: Text("data")),

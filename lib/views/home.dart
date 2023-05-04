@@ -1,7 +1,27 @@
 part of 'pages.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final Apppreferences _prefs = Apppreferences();
+  late bool isOnboarding;
+  late bool isLogged;
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+
+  void getdata() async {
+    isOnboarding = await _prefs.getOnboarding();
+    isLogged = await _prefs.getLoginState();
+    print("$isOnboarding , $isLogged");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +67,12 @@ class Home extends StatelessWidget {
                   )
                 ],
               ),
-              Text("data"),
+              TextButton(
+                child: Text("data"),
+                onPressed: () {
+                  _prefs.setLoginState(false);
+                },
+              ),
               Container(),
             ],
           ),

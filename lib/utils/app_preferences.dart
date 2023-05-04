@@ -12,4 +12,14 @@ class Apppreferences {
     final SharedPreferences pref = await _pref;
     return pref.getBool("login") ?? false;
   }
+
+  Future<bool> getOnboarding() async {
+    final SharedPreferences pref = await _pref;
+    return pref.getBool("onboarding") ?? false;
+  }
+
+  void setOnboarding(bool onboardingstate) async {
+    final SharedPreferences pref = await _pref;
+    pref.setBool("onboarding", onboardingstate);
+  }
 }
